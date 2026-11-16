@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BetterConnect — India's Tutor Management Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#1a73e8;--blue-d:#0d47a1;--blue-l:#e8f0fe;
+  --green:#1e8e3e;--green-l:#e6f4ea;
+  --orange:#e37400;--red:#d93025;
+  --ink:#202124;--ink-2:#3c4043;--ink-3:#5f6368;--ink-4:#9aa0a6;
+  --line:#dadce0;--bg:#f8f9fa;--card:#fff;
+  --font:'Inter',system-ui,sans-serif;
+  --r:14px;--shadow:0 2px 12px rgba(0,0,0,.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+img{max-width:100%}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:0 24px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-icon{width:32px;height:32px;border-radius:9px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;letter-spacing:-.5px}
+.nav-logo-icon svg{width:18px;height:18px}
+.nav-wordmark{font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.4px}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:14px;color:var(--ink-3);font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:10px;font-size:14px;font-weight:700;transition:background .2s}
+.nav-cta:hover{background:var(--blue-d);color:#fff}
+
+/* HERO */
+.hero{background:linear-gradient(160deg,#f0f4ff 0%,#fff 60%);padding:80px 24px 72px;border-bottom:1px solid var(--line)}
+.hero-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;text-align:left}
+.hero h1{font-size:clamp(30px,4vw,52px);font-weight:900;line-height:1.15;letter-spacing:-.8px;color:var(--ink)}
+.hero h1 span{color:var(--blue)}
+.hero-sub{font-size:19px;color:var(--ink-3);line-height:1.65;margin:0 0 24px}
+.hero-bullets{list-style:none;display:flex;flex-direction:column;gap:10px}
+.hero-bullets li{display:flex;align-items:center;gap:10px;font-size:16px;color:var(--ink-2)}
+.hero-bullets .ck{color:var(--green);font-weight:800;font-size:16px}
+
+/* SIGNUP CARD */
+.signup-card{background:#fff;border-radius:20px;border:1.5px solid var(--line);padding:28px 28px 24px}
+.signup-title{font-size:18px;font-weight:800;color:var(--ink);margin-bottom:16px}
+.role-toggle{display:flex;background:var(--bg);border-radius:12px;padding:4px;gap:4px;margin-bottom:20px}
+.role-btn{flex:1;padding:9px;border:none;border-radius:9px;background:transparent;font-size:14px;font-weight:600;color:var(--ink-3);cursor:pointer;transition:all .2s}
+.role-btn.active{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.signup-fields{display:flex;flex-direction:column;gap:14px}
+.signup-fields input{padding:12px 4px;border:none;border-bottom:1.5px solid var(--line);border-radius:0;font-family:var(--font);font-size:15px;outline:none;transition:border .2s;background:transparent;width:100%}
+.signup-fields input:focus{border-bottom-color:var(--blue)}
+.signup-submit{background:var(--blue);color:#fff;border:none;border-radius:12px;padding:14px;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:background .2s;width:100%}
+.signup-submit:hover{background:var(--blue-d)}
+.signup-thanks{display:none;text-align:center;font-size:14px;color:var(--green);font-weight:600;padding-top:4px}
+.signup-note{font-size:12.5px;color:var(--ink-4);text-align:center;padding-top:2px}
+.tutor-only{display:block}
+
+/* SECTIONS */
+.section-inner{max-width:1100px;margin:0 auto;padding:0 24px}
+section{padding:88px 0}
+.section-badge{display:inline-block;background:var(--blue-l);color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:16px}
+.section-title{font-size:clamp(26px,3.5vw,42px);font-weight:900;line-height:1.2;letter-spacing:-.6px;color:var(--ink);margin-bottom:14px}
+.section-sub{font-size:17px;color:var(--ink-3);max-width:600px;line-height:1.65}
+
+/* FEATURES */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.feat-card{background:var(--bg);border-radius:var(--r);padding:28px;border:1px solid var(--line);transition:box-shadow .2s,transform .2s}
+.feat-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.feat-icon{width:48px;height:48px;border-radius:14px;background:var(--blue-l);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.feat-icon svg{width:24px;height:24px}
+.feat-title{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:8px}
+.feat-desc{font-size:14px;color:var(--ink-3);line-height:1.6}
+
+/* HOW IT WORKS */
+.hiw{background:linear-gradient(160deg,#f0f4ff 0%,#fff 60%)}
+.hiw-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:52px}
+.hiw-step{position:relative;padding:28px}
+.hiw-num{width:44px;height:44px;border-radius:50%;background:var(--blue);color:#fff;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.hiw-title{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:8px}
+.hiw-desc{font-size:14px;color:var(--ink-3);line-height:1.6}
+
+/* FOR WHOM */
+.forwhom-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:52px}
+.forwhom-card{position:relative;border-radius:20px;padding:40px;overflow:hidden}
+.forwhom-card.tutor{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-d) 100%);color:#fff}
+.forwhom-card.student{background:linear-gradient(135deg,#1e8e3e 0%,#0d5c2e 100%);color:#fff}
+.forwhom-eyebrow{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.75;margin-bottom:12px}
+.forwhom-title{font-size:clamp(22px,2.5vw,30px);font-weight:900;line-height:1.2;margin-bottom:24px}
+.forwhom-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+.forwhom-list li{font-size:14.5px;opacity:.9;padding-left:22px;position:relative;line-height:1.5}
+.forwhom-list li::before{content:'✓';position:absolute;left:0;font-weight:800;opacity:.8}
+
+
+
+/* TESTIMONIALS */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.testi-card{background:var(--bg);border-radius:var(--r);padding:28px;border:1px solid var(--line)}
+.testi-stars{color:#f9ab00;font-size:16px;margin-bottom:14px;letter-spacing:2px}
+.testi-quote{font-size:14.5px;color:var(--ink-2);line-height:1.65;margin-bottom:20px;font-style:italic}
+.testi-quote::before{content:'"';color:var(--blue);font-size:40px;line-height:0;vertical-align:-16px;margin-right:4px;font-style:normal}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-av{width:38px;height:38px;border-radius:50%;color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.testi-name{font-size:14px;font-weight:700;color:var(--ink)}
+.testi-role{font-size:12.5px;color:var(--ink-4)}
+
+/* CTA BANNER */
+.cta-banner{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-d) 100%);color:#fff;padding:88px 24px;text-align:center}
+.cta-banner h2{font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:-.6px;line-height:1.2;margin-bottom:14px}
+.cta-banner p{font-size:17px;opacity:.85;margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto}
+.btn-white{display:inline-block;background:#fff;color:var(--blue);padding:15px 36px;border-radius:12px;font-size:16px;font-weight:800;transition:transform .2s,box-shadow .2s}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.cta-sub{font-size:13px;opacity:.65;margin-top:16px}
+
+/* FOOTER */
+footer{background:var(--ink);color:#fff;padding:64px 24px 32px}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand .nav-logo{margin-bottom:14px}
+.footer-brand .nav-wordmark{color:#fff}
+.footer-brand p{font-size:14px;opacity:.6;line-height:1.65}
+.footer-col h4{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.5;margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:14px;color:rgba(255,255,255,.65);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:28px;display:flex;justify-content:space-between;align-items:center;font-size:13px;opacity:.5}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.visible{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:40px;text-align:center}
+  .hero-bullets li{justify-content:center}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .hiw-steps{grid-template-columns:1fr 1fr}
+  .forwhom-grid{grid-template-columns:1fr}
+  .reminder-flow{grid-template-columns:1fr 1fr}
+  .reminder-arrow{display:none}
+  .testi-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .features-grid{grid-template-columns:1fr}
+  .hiw-steps{grid-template-columns:1fr}
+  .reminder-flow{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <span class="nav-wordmark">BetterConnect</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#for-whom">Who it's for</a>
+      <a href="#signup" class="nav-cta">Get early access</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1 class="fade-up d1">Run your classes.<br/>We handle <span>everything else</span>.</h1>
+      <p class="hero-sub fade-up d2">Auto fee reminders, attendance &amp; test reports — so you can focus on <strong>teaching and your students' personality development.</strong></p>
+      <ul class="hero-bullets fade-up d3">
+        <li><span class="ck">✓</span> No commission on your earnings, ever</li>
+        <li><span class="ck">✓</span> Auto fee reminders — no awkward conversations</li>
+        <li><span class="ck">✓</span> Completely free</li>
+      </ul>
+    </div>
+    <div id="signup" class="signup-card fade-up d3">
+      <p class="signup-title">Who are you?</p>
+      <div class="role-toggle">
+        <button class="role-btn active" id="role-tutor" onclick="setRole('tutor')">I'm a Tutor</button>
+        <button class="role-btn" id="role-parent" onclick="setRole('parent')">Parent / Student</button>
+      </div>
+      <div class="signup-fields">
+        <input id="f-name" type="text" placeholder="Your name"/>
+        <input id="f-phone" type="tel" placeholder="WhatsApp number"/>
+        <input id="f-city" type="text" placeholder="Your city"/>
+        <input id="f-students" type="text" placeholder="How many students do you teach?" class="tutor-only"/>
+        <button class="signup-submit" onclick="submitForm()">Get early access →</button>
+        <p class="signup-thanks" id="f-thanks">🎉 Thank you! We'll reach out on WhatsApp within 24 hours.</p>
+        <p class="signup-note">Completely free · No app download needed to sign up</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-inner">
+    
+    <h2 class="section-title">Everything a tutor needs.<br/>Nothing they don't.</h2>
+    <p class="section-sub">One clear action per screen. No jargon. If you can use WhatsApp, you can use BetterConnect in 5 minutes.</p>
+    <div class="features-grid">
+      <div class="feat-card fade-up">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <div class="feat-title">Batch management</div>
+        <div class="feat-desc">Create batches for each class — set subject, grade, board, timing and fee. Add students with parent details in seconds. Sorted by next upcoming class automatically.</div>
+      </div>
+      <div class="feat-card fade-up d1">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6v6l4 2"/></svg></div>
+        <div class="feat-title">Attendance in seconds</div>
+        <div class="feat-desc">Tap "All present", then mark only the absent students. Parents are notified via app automatically. Monthly totals entry available for catch-up.</div>
+      </div>
+      <div class="feat-card fade-up d2">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="feat-title">Fee tracking &amp; reminders</div>
+        <div class="feat-desc">See who's paid, who's due and who's overdue at a glance. Reminders go out automatically on the due date and 3, 5 and 7 days after — no awkward conversations needed.</div>
+      </div>
+      <div class="feat-card fade-up d3">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+        <div class="feat-title">Test reports in 60 seconds</div>
+        <div class="feat-desc">Enter marks for all students, publish — ranks, percentages and class average are calculated instantly. Reports sent to every parent via app.</div>
+      </div>
+      <div class="feat-card fade-up d4">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
+        <div class="feat-title">Parent &amp; student app</div>
+        <div class="feat-desc">Every tutor brings their students onto the app. Parents see fees, attendance, test results and announcements in one place. No separate setup needed.</div>
+      </div>
+      <div class="feat-card fade-up d1">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="feat-title">Announcements</div>
+        <div class="feat-desc">Holiday? Class cancelled? Send a notice to one batch or all batches in one tap. All students and parents receive it instantly via app notification.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="hiw">
+  <div class="section-inner">
+    
+    <h2 class="section-title">Up and running in under 5 minutes.</h2>
+    <p class="section-sub">Designed for tutors aged 30–60 who are comfortable with WhatsApp — not complex software.</p>
+    <div class="hiw-steps">
+      <div class="hiw-step fade-up">
+        <div class="hiw-num">1</div>
+        <div class="hiw-title">Create a batch</div>
+        <div class="hiw-desc">Set the subject, class, timing and monthly fee. Takes 2 minutes.</div>
+      </div>
+      <div class="hiw-step fade-up d1">
+        <div class="hiw-num">2</div>
+        <div class="hiw-title">Add your students</div>
+        <div class="hiw-desc">Pick directly from your phone contacts. We fill in student and parent details automatically.</div>
+      </div>
+      <div class="hiw-step fade-up d2">
+        <div class="hiw-num">3</div>
+        <div class="hiw-title">Students join the app</div>
+        <div class="hiw-desc">Each student gets an invite link. They install the app, sign in with OTP — done.</div>
+      </div>
+      <div class="hiw-step fade-up d3">
+        <div class="hiw-num">4</div>
+        <div class="hiw-title">BetterConnect handles the rest</div>
+        <div class="hiw-desc">Fee reminders, attendance nudges, test results, parent updates — all automatic.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHOM -->
+<section id="for-whom">
+  <div class="section-inner">
+    
+    <h2 class="section-title">Built for every person in the classroom.</h2>
+    <div class="forwhom-grid">
+      <div class="forwhom-card tutor fade-up">
+        <div class="forwhom-eyebrow">For tutors</div>
+        <div class="forwhom-title">Stop chasing fees.<br/>Start teaching.</div>
+        <ul class="forwhom-list">
+          <li>Automated fee reminders — no awkward conversations</li>
+          <li>Attendance marked in under 10 seconds</li>
+          <li>Test reports created and sent in 60 seconds</li>
+          <li>Batch announcements to all parents in one tap</li>
+          <li>Discount tracking per student, built in</li>
+          <li>Display name privacy — school doesn't need to know</li>
+        </ul>
+      </div>
+      <div class="forwhom-card student fade-up d1">
+        <div class="forwhom-eyebrow">For parents &amp; students</div>
+        <div class="forwhom-title">Know everything.<br/>Always.</div>
+        <ul class="forwhom-list">
+          <li>See fee status and pay with one tap</li>
+          <li>Track attendance — present, absent, percentage</li>
+          <li>View test scores, rank and class average</li>
+          <li>Get announcements and schedule updates instantly</li>
+          <li>Find the right tutor through our matching engine</li>
+          <li>One app for all subjects and all batches</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="background:var(--bg)">
+  <div class="section-inner">
+    
+    <h2 class="section-title">Tutors who changed their minds.</h2>
+    <p class="section-sub">Some of these tutors told us they didn't need an app — until they saw the prototype.</p>
+    <div class="testi-grid">
+      <div class="testi-card fade-up">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"I used to feel so embarrassed reminding parents about fees. Now the app does it and I don't have to say anything. The relationship with parents is actually better now."</div>
+        <div class="testi-author">
+          <div class="testi-av" style="background:var(--blue)">M</div>
+          <div>
+            <div class="testi-name">Meena Sharma</div>
+            <div class="testi-role">Physics tutor · Dehradun · 35 students</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-up d1">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"Marking attendance used to take 5 minutes every class. Now it takes 10 seconds. I tap 'All present' and mark only the ones who are absent. Parents see it immediately."</div>
+        <div class="testi-author">
+          <div class="testi-av" style="background:#1e8e3e">R</div>
+          <div>
+            <div class="testi-name">Rajesh Kumar</div>
+            <div class="testi-role">Maths tutor · Lucknow · 28 students</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-up d2">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"After every test I used to spend 2 hours calculating ranks and writing reports to parents. Now I enter the marks, press publish and everything is done in one minute."</div>
+        <div class="testi-author">
+          <div class="testi-av" style="background:#e37400">P</div>
+          <div>
+            <div class="testi-name">Priya Verma</div>
+            <div class="testi-role">Chemistry tutor · Indore · 42 students</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Join India's tutor community.<br/>Free until we launch.</h2>
+  <p>Be among the first tutors on BetterConnect. We'll reach out on WhatsApp and onboard you personally.</p>
+  <a href="#signup" class="btn-white">Get early access →</a>
+  <p class="cta-sub">No app download needed · No credit card · Cancel anytime</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="nav-logo-icon">BC</div>
+          <span class="nav-wordmark">BetterConnect</span>
+        </div>
+        <p>Tutor workflow app &amp; matching marketplace. Built for India's 7M home tutors.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#signup">Early access</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>For</h4>
+        <ul>
+          <li><a href="#for-whom">Home tutors</a></li>
+          <li><a href="#for-whom">Parents</a></li>
+          <li><a href="#for-whom">Students</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Privacy policy</a></li>
+          <li><a href="mailto:hello@betterconnectt.com">Contact us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BetterConnect · Made with ❤️ in India 🇮🇳</p>
+      <span>betterconnectt.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function setRole(r){
+  document.getElementById('role-tutor').className='role-btn'+(r==='tutor'?' active':'');
+  document.getElementById('role-parent').className='role-btn'+(r==='parent'?' active':'');
+  const stu=document.getElementById('f-students');
+  if(stu) stu.style.display=r==='tutor'?'block':'none';
+}
+function submitForm(){
+  const n=document.getElementById('f-name').value.trim();
+  const p=document.getElementById('f-phone').value.trim();
+  if(!n||!p){alert('Please enter your name and WhatsApp number.');return;}
+  document.getElementById('f-thanks').style.display='block';
+  document.querySelector('.signup-submit').style.display='none';
+}
+// Scroll animations
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+setRole('tutor');
+</script>
+</body>
+</html>
